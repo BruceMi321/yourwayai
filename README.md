@@ -1,4 +1,4 @@
-# YourWayAI 开源导航站
+# YourwayAI 开源导航站
 
 ![VitePress](https://img.shields.io/badge/VitePress-1.6.4-blue?style=flat-square&logo=vitepress)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
@@ -49,7 +49,7 @@ npm run add-tool -- https://github.com/用户名/仓库名
 ## 📂 目录结构
 
 ```text
-yourwayAI/
+YourwayAI/
 ├── docs/               # 文档源码
 │   ├── .vitepress/    # VitePress 配置
 │   ├── tools/         # 工具介绍页面
