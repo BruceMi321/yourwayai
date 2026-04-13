@@ -36,6 +36,12 @@ export default defineConfig({
           link: '/tools/v8' },
           { text: 'chatwoot', link: '/tools/chatwoot' }
         ]
+      },
+      {
+        text: '公众号优选',
+        items: [
+          { text: '本地Copilot：Tabby', link: '/tools/tabby' }
+        ]
       }
     ],
 
