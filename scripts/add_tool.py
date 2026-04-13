@@ -105,8 +105,8 @@ def create_markdown(info):
 ## 📊 项目信息
 * **GitHub**: [{info['url']}]({info['url']})
 {homepage_section}
-* **星标数**: ⭐ {info['stars']}
-* **主要语言**: 🏷️ {info['language']}
+* **星标数**: ![GitHub Repo stars](https://img.shields.io/github/stars/{info['full_name']}?style=social)
+* **版本信息**: ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/release/{info['full_name']}?style=flat-square)
 * **开源协议**: ⚖️ {info['license']}
 
 {features_section}

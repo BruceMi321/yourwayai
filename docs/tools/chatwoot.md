@@ -9,8 +9,8 @@
 ## 📊 项目信息
 * **GitHub**: [https://github.com/chatwoot/chatwoot](https://github.com/chatwoot/chatwoot)
 * **官方主页**: [https://www.chatwoot.com](https://www.chatwoot.com)
-* **星标数**: ⭐ 28k+
-* **主要语言**: 🏷️ Ruby, Vue
+* **星标数**: ![GitHub Repo stars](https://img.shields.io/github/stars/chatwoot/chatwoot?style=social)
+* **版本**: ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/release/chatwoot/chatwoot?style=flat-square)
 * **开源协议**: ⚖️ MIT / 商业双授权
 
 ---
