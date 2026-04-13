@@ -35,20 +35,43 @@ def fetch_github_info(url):
         if readme_data.get('content'):
             readme_content = base64.b64decode(readme_data['content']).decode('utf-8')
     
-    # Extract Features or Key Sections from README (using regex to find headers)
+    # Extract Features or Key Sections from README
     features = ""
     if readme_content:
-        # Look for ## Features or ## Key Features or ## Introduction
-        feature_match = re.search(r'## (Features|Key Features|Core Features|Highlights)(.*?)##', readme_content, re.DOTALL | re.IGNORECASE)
-        if feature_match:
-            features = feature_match.group(2).strip()
-        else:
-            # Fallback: get the first paragraph after title
-            paragraphs = [p for p in readme_content.split('\n\n') if p.strip()]
-            if len(paragraphs) > 1:
-                features = paragraphs[1].strip()
+        # 1. Clean up badges and common headers from the start
+        content_clean = re.sub(r'(\[?!\[.*?\]\(.*?\))', '', readme_content) # Remove images/badges
+        content_clean = re.sub(r'<[^>]+>', '', content_clean) # Remove raw HTML
+        
+        # 2. Try to find Feature-like sections (supporting emojis)
+        # Regex to match headers like: ## ✨ Features, ## 🚀 Highlights, ## 💬 Support
+        header_patterns = [
+            r'## .*?(Features|Key Features|Core Features|Highlights|Capability|What is)(.*?)##',
+            r'# .*?(Features|Key Features|Core Features|Highlights|Capability|What is)(.*?)#',
+            r'## .*?(Usage|Success|About)(.*?)##'
+        ]
+        
+        for pattern in header_patterns:
+            match = re.search(pattern, content_clean, re.DOTALL | re.IGNORECASE)
+            if match:
+                features = match.group(2).strip()
+                break
+        
+        # 3. Fallback: Take the first significant block of text if nothing found
+        if not features:
+            lines = content_clean.split('\n')
+            paragraphs = []
+            current_p = []
+            for line in lines:
+                if line.strip():
+                    current_p.append(line)
+                elif current_p:
+                    paragraphs.append("\n".join(current_p))
+                    current_p = []
+            
+            # Take first 2-3 non-empty paragraphs
+            features = "\n\n".join([p for p in paragraphs if len(p) > 50][:3])
 
-    # 3. Construct Image URL (GitHub Social Preview)
+    # 4. Construct Image URL (GitHub Social Preview)
     # The standard URL pattern for GitHub's Open Graph images
     og_image = f"https://opengraph.githubassets.com/1/{owner}/{repo_name}"
 
