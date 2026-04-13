@@ -4,6 +4,16 @@ export default defineConfig({
   base: '/yourwayai/',
   title: "YourwayAI开源导航站",
   description: "发现优质的免费开源软件",
+
+  // 网站头部配置 (Favicon 与 OpenGraph 多媒体分享标签)
+  head: [
+    ['link', { rel: 'icon', href: '/yourwayai/logo.jpg' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: 'YourwayAI开源导航站' }],
+    ['meta', { property: 'og:image', content: 'https://brucemi321.github.io/yourwayai/logo.jpg' }],
+    ['meta', { property: 'og:description', content: '发现极致优雅的重磅开源软件与极客工具' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }]
+  ],
   
   // 启用最后更新时间
   lastUpdated: true,

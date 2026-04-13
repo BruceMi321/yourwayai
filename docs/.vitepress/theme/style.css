@@ -1,0 +1,18 @@
+/* Override default VitePress CSS variables with YourwayAI Brand Green */
+:root {
+  --vp-c-brand-1: #18d867; /* Primary Brand Color - Bright Neon Green */
+  --vp-c-brand-2: #09b851; /* Darker variant for hovers */
+  --vp-c-brand-3: #00933c; /* Darkest variant for active states */
+  --vp-c-brand-soft: rgba(24, 216, 103, 0.16); /* Background for soft elements */
+}
+
+/* Optional: Slight tweaks to make the typography feel more premium */
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Style the Home page feature icons dynamically with our color */
+.VPHomeFeatures .VPFeature .icon {
+  color: var(--vp-c-brand-1);
+}
