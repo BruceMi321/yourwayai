@@ -10,7 +10,7 @@ export default defineConfig({
 
   themeConfig: {
     // 网站Logo
-    logo: '/logo.png',
+    logo: '/logo.jpg',
 
     // 网站顶部的导航栏
     nav: [

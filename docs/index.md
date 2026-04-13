@@ -7,7 +7,7 @@ hero:
   text: "发现并探索优质的免费开源软件"
   tagline: 告别高昂订阅费，拥抱开源社区的力量
   image:
-    src: /logo.png
+    src: /logo.jpg
     alt: YourwayAI
   actions:
     - theme: brand
