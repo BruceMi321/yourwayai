@@ -59,7 +59,6 @@ export default defineConfig({
         text: '公众号优选',
         collapsed: false,
         items: [
-          { text: 'GitHub热榜开源 Tabb...', link: '/tools/wx_20260413125042' },
           { text: '最强浏览器杀手 Open Ch...', link: '/tools/wx_20260413125458' }
         ]
       }
