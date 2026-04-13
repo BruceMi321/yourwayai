@@ -3,6 +3,7 @@ import os
 import requests
 import re
 import subprocess
+import base64
 
 def fetch_github_info(url):
     # Extract owner and repo from URL
@@ -11,47 +12,90 @@ def fetch_github_info(url):
         print("Invalid GitHub URL")
         sys.exit(1)
     
-    owner, repo = match.groups()
-    repo = repo.replace('.git', '')
+    owner, repo_name = match.groups()
+    repo_name = repo_name.replace('.git', '')
     
-    api_url = f"https://api.github.com/repos/{owner}/{repo}"
-    print(f"Fetching info for {owner}/{repo}...")
+    # 1. Fetch Basic Repo Info
+    api_url = f"https://api.github.com/repos/{owner}/{repo_name}"
+    print(f"Fetching info for {owner}/{repo_name}...")
     
     response = requests.get(api_url)
     if response.status_code != 200:
-        print(f"Failed to fetch data: {response.status_code}")
+        print(f"Failed to fetch repo data: {response.status_code}")
         sys.exit(1)
     
-    data = response.json()
+    repo_data = response.json()
+    
+    # 2. Try to fetch README content
+    readme_content = ""
+    readme_url = f"https://api.github.com/repos/{owner}/{repo_name}/readme"
+    readme_res = requests.get(readme_url)
+    if readme_res.status_code == 200:
+        readme_data = readme_res.json()
+        if readme_data.get('content'):
+            readme_content = base64.b64decode(readme_data['content']).decode('utf-8')
+    
+    # Extract Features or Key Sections from README (using regex to find headers)
+    features = ""
+    if readme_content:
+        # Look for ## Features or ## Key Features or ## Introduction
+        feature_match = re.search(r'## (Features|Key Features|Core Features|Highlights)(.*?)##', readme_content, re.DOTALL | re.IGNORECASE)
+        if feature_match:
+            features = feature_match.group(2).strip()
+        else:
+            # Fallback: get the first paragraph after title
+            paragraphs = [p for p in readme_content.split('\n\n') if p.strip()]
+            if len(paragraphs) > 1:
+                features = paragraphs[1].strip()
+
+    # 3. Construct Image URL (GitHub Social Preview)
+    # The standard URL pattern for GitHub's Open Graph images
+    og_image = f"https://opengraph.githubassets.com/1/{owner}/{repo_name}"
+
     return {
-        'name': data.get('name'),
-        'description': data.get('description', 'No description provided.'),
-        'stars': data.get('stargazers_count', 0),
-        'url': data.get('html_url'),
-        'filename': repo.lower()
+        'name': repo_data.get('name'),
+        'full_name': repo_data.get('full_name'),
+        'description': repo_data.get('description', 'No description provided.'),
+        'stars': repo_data.get('stargazers_count', 0),
+        'language': repo_data.get('language', 'Unknown'),
+        'license': repo_data.get('license', {}).get('name', 'No License') if repo_data.get('license') else 'No License',
+        'url': repo_data.get('html_url'),
+        'homepage': repo_data.get('homepage'),
+        'og_image': og_image,
+        'features': features,
+        'filename': repo_name.lower()
     }
 
 def create_markdown(info):
+    homepage_section = f"* **官方主页**: [{info['homepage']}]({info['homepage']})" if info['homepage'] else ""
+    
+    features_section = f"\n## ✨ 核心特性\n{info['features']}" if info['features'] else ""
+
     content = f"""# {info['name']}
+
+<p align="center">
+  <img src="{info['og_image']}" alt="{info['name']} Preview" style="border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
+</p>
 
 {info['description']}
 
-## 🌟 项目信息
+## 📊 项目信息
 * **GitHub**: [{info['url']}]({info['url']})
+{homepage_section}
 * **星标数**: ⭐ {info['stars']}
-* **类型**: 开源项目
+* **主要语言**: 🏷️ {info['language']}
+* **开源协议**: ⚖️ {info['license']}
 
-## 🚀 简介
-该项目是 GitHub 上的优质开源资源，由社区共同维护。
+{features_section}
 
-## 📥 访问与了解
-您可以访问 [GitHub 仓库]({info['url']}) 获取更多详细文档和源代码。
+## 🚀 快速了解
+该项目由 **{info['full_name'].split('/')[0]}** 发起并在 GitHub 上开源。您可以访问 [GitHub 仓库]({info['url']}) 获取完整源代码、文档及安装指南。
 """
     filepath = f"docs/tools/{info['filename']}.md"
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
-    print(f"Created {filepath}")
+    print(f"Created/Updated {filepath}")
     return filepath
 
 def update_config(info):
@@ -63,38 +107,24 @@ def update_config(info):
     with open(config_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Define the new item
     new_item = f"{{ text: '{info['name']}', link: '/tools/{info['filename']}' }}"
     
-    # Try to find '自动化收录' category
     if '自动化收录' in content:
-        # Append to existing category
-        # Look for items: [ ... ] within the '自动化收录' section
         pattern = r"(text:\s*'自动化收录'.*?items:\s*\[)(.*?)(\])"
         def item_replacement(m):
             header, items, closer = m.groups()
             if new_item in items:
-                return m.group(0) # Already exists
+                return m.group(0)
             
-            items_list = items.strip().split(',')
-            items_list = [i.strip() for i in items_list if i.strip()]
+            items_list = [i.strip() for i in items.split(',') if i.strip()]
             items_list.append(new_item)
-            
             formatted_items = ",\n          ".join(items_list)
             return f"{header}\n          {formatted_items}\n        {closer}"
         
         new_content = re.sub(pattern, item_replacement, content, flags=re.DOTALL)
     else:
-        # Add new category to the end of the sidebar array
-        # Find the sidebar array: sidebar: [ ... ]
-        pattern = r"(sidebar:\s*\[)(.*?)(\]\s*,?\s*//?\s*右上角|sidebar:\s*\[)(.*?)(\]\s*\n\s*\})"
-        # Simpler: find the last ']' before the next major section or end of themeConfig
-        # We know our sidebar ends with a ']' followed by some whitespace and ']' (for themeConfig) or similar.
-        
-        # Let's use a non-regex approach for finding the insertion point if regex is too hard
         sidebar_start = content.find('sidebar: [')
         if sidebar_start != -1:
-            # Find the match for the sidebar's closing bracket
             bracket_count = 0
             idx = sidebar_start + len('sidebar: [')
             while idx < len(content):
@@ -102,7 +132,6 @@ def update_config(info):
                     bracket_count += 1
                 elif content[idx] == ']':
                     if bracket_count == 0:
-                        # Found the closing bracket of the sidebar array
                         insertion_point = idx
                         category = f""",
       {{
@@ -117,7 +146,6 @@ def update_config(info):
                         bracket_count -= 1
                 idx += 1
         else:
-            print("Could not find sidebar in config.mts")
             return
 
     with open(config_path, 'w', encoding='utf-8') as f:
@@ -127,7 +155,7 @@ def update_config(info):
 def git_push(info):
     try:
         subprocess.run(["git", "add", "."], check=True)
-        subprocess.run(["git", "commit", "-m", f"自动添加工具: {info['name']}"], check=True)
+        subprocess.run(["git", "commit", "-m", f"内容优化：更新/添加工具 {info['name']} 的详尽资料与图片"], check=True)
         subprocess.run(["git", "push"], check=True)
         print("Successfully pushed to GitHub")
     except subprocess.CalledProcessError as e:
