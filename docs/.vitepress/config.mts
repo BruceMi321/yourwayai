@@ -30,7 +30,7 @@ export default defineConfig({
       {
         text: '自动化收录',
         items: [
-          { text: 'the-art-of-command-line',
+          { text: '命令行的艺术',
           link: '/tools/the-art-of-command-line' },
           { text: 'V8 Engine',
           link: '/tools/v8' },
