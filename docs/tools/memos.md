@@ -2,7 +2,7 @@
 title: Memos
 description: 轻量级的碎片化知识管理工具，轻松记录每一次灵感闪现。
 icon: '📝'
-category: '效率与生产力 (Productivity)'
+category: '知识管理'
 ---
 # Memos
 

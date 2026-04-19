@@ -98,49 +98,8 @@ def create_markdown(info):
 title: {info['name']}
 description: {info['description'][:100] + ('...' if len(info['description']) > 100 else '')}
 icon: '📦'
-category: '开发者生态 (Developer Ecosystem)'
----
-
-# {info['name']}
-
-<p align="center">
-  <img src="{info['og_image']}" alt="{info['name']} Preview" style="border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
-</p>
-
-{info['description']}
-
-## 📊 项目信息
-* **GitHub**: [{info['url']}]({info['url']})
-{homepage_section}
-* **星标数**: ![GitHub Repo stars](https://img.shields.io/github/stars/{info['full_name']}?style=social)
-* **版本信息**: ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/release/{info['full_name']}?style=flat-square)
-* **开源协议**: ⚖️ {info['license']}
-
-{features_section}
-
-## 🚀 快速了解
-该项目由 **{info['full_name'].split('/')[0]}** 发起并在 GitHub 上开源。您可以访问 [GitHub 仓库]({info['url']}) 获取完整源代码、文档及安装指南。
-"""
-    filepath = f"docs/tools/{info['filename']}.md"
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print(f"Created/Updated {filepath}")
-    return filepath
-
-def update_config(info):
-    config_path = "docs/.vitepress/config.mts"
-    if not os.path.exists(config_path):
-        print(f"Config file {config_path} not found")
-        return
-
-    with open(config_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    new_item = f"{{ text: '{info['name']}', link: '/tools/{info['filename']}' }}"
-    
-    if '开发者生态 (Developer Ecosystem)' in content:
-        pattern = r"(text:\s*'开发者生态 \(Developer Ecosystem\)'.*?items:\s*\[)(.*?)(\])"
+    if '👨‍💻 开发者工具' in content:
+        pattern = r"(text:\s*'👨‍💻 开发者工具'.*?items:\s*\[)(.*?)(\])"
         def item_replacement(m):
             header, items, closer = m.groups()
             if new_item in items:

@@ -32,36 +32,42 @@ export default defineConfig({
     // 网站左侧的分类侧边栏
     sidebar: [
       {
-        text: '效率与生产力 (Productivity)',
+        text: '📝 知识管理',
         collapsed: false,
         items: [
-          { text: 'Outline (团队Wiki)', link: '/tools/outline' },
-          { text: 'Memos (碎片化笔记)', link: '/tools/memos' },
-          { text: 'Chatwoot (沟通与客服)', link: '/tools/chatwoot' }
+          { text: 'Outline — 团队 Wiki 知识库', link: '/tools/outline' },
+          { text: 'Memos — 碎片化灵感笔记', link: '/tools/memos' }
         ]
       },
       {
-        text: '开发者生态 (Developer Ecosystem)',
+        text: '💬 沟通协作',
         collapsed: false,
         items: [
-          { text: '命令行的艺术 (终端)', link: '/tools/the-art-of-command-line' },
-          { text: 'V8 Engine (运行环境)', link: '/tools/v8' }
+          { text: 'Chatwoot — 全渠道客服中台', link: '/tools/chatwoot' }
         ]
       },
       {
-        text: '数字生活与媒体 (Lifestyle & Media)',
+        text: '🎬 媒体与娱乐',
         collapsed: false,
         items: [
-          { text: 'Jellyfin (私人影院)', link: '/tools/jellyfin' }
+          { text: 'Jellyfin — 自建私人影院', link: '/tools/jellyfin' }
         ]
       },
       {
-        text: '星球专栏与优选资源 (Featured Resources)',
+        text: '👨‍💻 开发者工具',
         collapsed: false,
         items: [
-          { text: '最强浏览器杀手 Open Ch...', link: '/tools/wx_20260413125458' },
-          { text: '手慢无：送出 5 个免手续费汇...', link: '/tools/wx_20260419212801' },
-          { text: '支付宝可直接付款，3分钟搞定 ...', link: '/tools/wx_20260419212858' }
+          { text: '命令行的艺术 — 终端神技', link: '/tools/the-art-of-command-line' },
+          { text: 'V8 Engine — JS 运行引擎', link: '/tools/v8' }
+        ]
+      },
+      {
+        text: '💡 星球专栏',
+        collapsed: false,
+        items: [
+          { text: '最强浏览器杀手 Open Chrome', link: '/tools/wx_20260413125458' },
+          { text: '免手续费跨境汇款名额', link: '/tools/wx_20260419212801' },
+          { text: '支付宝搞定 AI 订阅全攻略', link: '/tools/wx_20260419212858' }
         ]
       }
     ],

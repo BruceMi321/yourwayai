@@ -2,7 +2,7 @@
 title: Chatwoot
 description: 现代化、开源且支持自托管的客户支持平台与多渠道客服中心。
 icon: '💬'
-category: '效率与生产力 (Productivity)'
+category: '沟通协作'
 ---
 # Chatwoot
 

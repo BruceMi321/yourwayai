@@ -2,7 +2,7 @@
 title: Jellyfin
 description: 掌握自己媒体资源的终极私人影院解决方案，拒绝商业捆绑。
 icon: '🎬'
-category: '数字生活与媒体 (Lifestyle & Media)'
+category: '媒体与娱乐'
 ---
 # Jellyfin
 

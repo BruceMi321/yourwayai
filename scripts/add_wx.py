@@ -84,43 +84,8 @@ def save_article(info):
 title: {info['title'][:50]}
 description: '来自 {info['author']} 的优选资源与文章推荐'
 icon: '💡'
-category: '星球专栏与优选资源 (Featured Resources)'
----
-
-# {info['title']}
-
-**来源**: {info['author']}
-**原文链接**: [点击前往微信阅读]({info['url']})
-
----
-
-{info['markdown']}
-"""
-    filepath = f"docs/tools/{filename}.md"
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print(f"Created {filepath}")
-    return filename
-
-def update_config(info, filename):
-    config_path = "docs/.vitepress/config.mts"
-    if not os.path.exists(config_path):
-        print(f"Config file {config_path} not found")
-        return
-
-    with open(config_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Create a short title for sidebar
-    short_title = info['title']
-    if len(short_title) > 18:
-        short_title = short_title[:15] + "..."
-
-    new_item = f"{{ text: '{short_title}', link: '/tools/{filename}' }}"
-    
-    if '星球专栏与优选资源' in content:
-        pattern = r"(text:\s*'星球专栏与优选资源.*?'.*?items:\s*\[)(.*?)(\])"
+    if '💡 星球专栏' in content:
+        pattern = r"(text:\s*'💡 星球专栏'.*?items:\s*\[)(.*?)(\])"
         def item_replacement(m):
             header, items, closer = m.groups()
             if new_item in items:

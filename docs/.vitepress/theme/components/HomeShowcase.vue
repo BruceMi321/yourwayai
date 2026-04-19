@@ -20,26 +20,33 @@
 
         <header class="main-header">
           <div class="header-title">
-            <h2>📈 Trending</h2>
-            <span class="tagline">Last 30 Days</span>
-          </div>
-          <div class="header-actions">
-            <button class="text-btn">More</button>
-            <button class="primary-btn">View All</button>
+            <h2>🚀 探索工具库</h2>
+            <span class="tagline">{{ filteredTools.length }} 个重磅资源</span>
           </div>
         </header>
 
-        <div class="tabs">
-          <button class="tab active">📈 Trending</button>
-          <button class="tab">🗓️ Newest</button>
-          <button class="tab">⭐ Popular</button>
-        </div>
+        <nav class="filter-nav">
+          <div class="tabs-container">
+            <button 
+              v-for="cat in categories" 
+              :key="cat"
+              class="category-tab" 
+              :class="{ active: selectedCategory === cat }"
+              @click="selectedCategory = cat"
+            >
+              <span class="cat-name">{{ cat }}</span>
+              <span class="cat-badge" v-if="getCategoryCount(cat) > 0">{{ getCategoryCount(cat) }}</span>
+            </button>
+          </div>
+        </nav>
 
         <div class="tools-grid">
-          <!-- Card 1 -->
-          <a :href="tool.link" class="tool-card" v-for="tool in tools" :key="tool.id" style="text-decoration: none; color: inherit;">
+          <a :href="tool.link" class="tool-card" v-for="tool in tools" :key="tool.id">
+            <div class="card-glow" :style="{ background: tool.iconBg }"></div>
             <div class="tool-card-header">
-              <div class="tool-icon" :style="{ backgroundColor: tool.iconBg }">{{ tool.icon }}</div>
+              <div class="tool-icon-wrapper" :style="{ backgroundColor: tool.iconBg }">
+                <span class="tool-icon-inner">{{ tool.icon }}</span>
+              </div>
               <div class="tool-meta-header">
                 <h3>{{ tool.name }}</h3>
                 <span class="tech-tag">{{ tool.category }}</span>
@@ -48,13 +55,10 @@
             <p class="tool-desc">{{ tool.desc }}</p>
             <div class="tool-footer">
               <div class="stats">
-                <span>⭐ {{ tool.stars }}</span>
-                <span>👁️ {{ tool.views }}</span>
+                <span v-if="tool.stars !== '-'">⭐ {{ tool.stars }}</span>
+                <span v-if="tool.views !== '-'">👁️ {{ tool.views }}</span>
               </div>
-              <div class="added-time">Added {{ tool.added }} ago</div>
-            </div>
-            <div class="platform-tags">
-              <span v-for="plat in tool.platforms" :key="plat">{{ plat }}</span>
+              <div class="visit-btn">详情阅读 →</div>
             </div>
           </a>
         </div>
@@ -126,11 +130,12 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 
 // Use Vite's native glob import to read all markdown frontmatter
-// This works reliably from any component location
 const modules = import.meta.glob('/tools/*.md', { eager: true })
+
+const selectedCategory = ref('All')
 
 // Simple color rotation for aesthetic card backgrounds
 const colors = [
@@ -141,10 +146,9 @@ const colors = [
   'rgba(255, 215, 0, 0.1)'
 ]
 
-const tools = computed(() => {
+const allTools = computed(() => {
   return Object.entries(modules).map(([path, mod], index) => {
-    const fm = mod.__pageData?.frontmatter || {}
-    // Convert file path like '/tools/chatwoot.md' → '/tools/chatwoot.html'
+    const fm = mod.default?.__pageData?.frontmatter || mod.__pageData?.frontmatter || {}
     const url = path.replace(/\.md$/, '.html')
     return {
       id: index,
@@ -161,6 +165,23 @@ const tools = computed(() => {
     }
   })
 })
+
+const categories = computed(() => {
+  const cats = new Set(allTools.value.map(t => t.category))
+  return ['All', ...Array.from(cats).sort()]
+})
+
+const filteredTools = computed(() => {
+  if (selectedCategory.value === 'All') return allTools.value
+  return allTools.value.filter(t => t.category === selectedCategory.value)
+})
+
+const tools = filteredTools
+
+const getCategoryCount = (cat) => {
+  if (cat === 'All') return allTools.value.length
+  return allTools.value.filter(t => t.category === cat).length
+}
 </script>
 
 <style scoped>
@@ -285,166 +306,180 @@ const tools = computed(() => {
 }
 
 
+/* Header Styles */
 .main-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-title {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-}
-
-.header-title h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.tagline {
-  font-size: 0.85rem;
-  color: var(--vp-c-text-2);
-  background-color: var(--vp-c-bg-soft);
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-}
-
-.header-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.header-actions button {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-}
-
-.text-btn {
-  background: transparent;
-  color: var(--vp-c-text-1);
-}
-
-.text-btn:hover {
-  background-color: var(--vp-c-bg-soft);
-}
-
-.primary-btn {
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border);
-}
-
-.primary-btn:hover {
-  background-color: var(--vp-c-bg-mute);
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--vp-c-border);
 }
 
-.tab {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+.header-title h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(120deg, var(--vp-c-text-1) 0%, var(--vp-c-brand-1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: 0.9rem;
+  color: var(--vp-c-text-2);
+  margin-top: 0.5rem;
+}
+
+/* Filter Navigation */
+.filter-nav {
+  margin-bottom: 2.5rem;
+  position: sticky;
+  top: var(--vp-nav-height);
+  z-index: 10;
+  padding: 0.5rem 0;
+  background: var(--vp-c-bg);
+}
+
+.tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 4px;
+  background: var(--vp-c-bg-alt);
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-border);
+  width: fit-content;
+}
+
+.category-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
   border: 1px solid transparent;
   background: transparent;
   color: var(--vp-c-text-2);
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.tab:hover {
-  background-color: var(--vp-c-bg-soft);
+.category-tab:hover {
   color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
 }
 
-.tab.active {
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-border);
+.category-tab.active {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-soft);
+  box-shadow: 0 4px 12px rgba(24, 216, 103, 0.1);
+}
+
+.cat-badge {
+  font-size: 0.75rem;
+  padding: 1px 6px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+
+.category-tab.active .cat-badge {
+  background: var(--vp-c-brand-1);
+  color: white;
 }
 
 /* Tool Grid */
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
 .tool-card {
-  background-color: var(--vp-c-bg-soft);
+  position: relative;
+  background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-border);
-  border-radius: 12px;
-  padding: 1.25rem;
+  border-radius: 16px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  position: relative;
+  gap: 1.2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none !important;
+  color: inherit !important;
   overflow: hidden;
 }
 
+.card-glow {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  opacity: 0;
+  filter: blur(40px);
+  z-index: 0;
+  transition: opacity 0.4s;
+}
+
 .tool-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px -10px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
   border-color: var(--vp-c-brand-1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+}
+
+.tool-card:hover .card-glow {
+  opacity: 0.05;
 }
 
 .tool-card-header {
+  position: relative;
+  z-index: 1;
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   align-items: center;
 }
 
-.tool-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+.tool-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  color: white;
+  font-size: 1.8rem;
   flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .tool-meta-header h3 {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
 }
 
 .tech-tag {
-  font-size: 0.7rem;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-default-soft);
-  border: 1px solid var(--vp-c-border);
-  padding: 0.1rem 0.4rem;
+  font-size: 0.75rem;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  padding: 2px 8px;
   border-radius: 4px;
   display: inline-block;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
 }
 
 .tool-desc {
-  font-size: 0.85rem;
+  position: relative;
+  z-index: 1;
+  font-size: 0.9rem;
   color: var(--vp-c-text-2);
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
+  min-height: 2.8em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -452,17 +487,33 @@ const tools = computed(() => {
 }
 
 .tool-footer {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.75rem;
-  color: var(--vp-c-text-2);
   margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 .stats {
   display: flex;
-  gap: 0.8rem;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
+  font-weight: 500;
+}
+
+.visit-btn {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--vp-c-brand-1);
+  transition: transform 0.2s;
+}
+
+.tool-card:hover .visit-btn {
+  transform: translateX(4px);
 }
 
 .platform-tags {

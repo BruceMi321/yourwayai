@@ -2,7 +2,7 @@
 title: Outline
 description: 开源且美观的团队 Wiki 与知识库平台，完美适配现代协作工作流。
 icon: '📝'
-category: '效率与生产力 (Productivity)'
+category: '知识管理'
 ---
 # Outline
 
