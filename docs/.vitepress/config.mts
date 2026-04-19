@@ -61,7 +61,9 @@ export default defineConfig({
         items: [
           { text: '最强浏览器杀手 Open Ch...',
           link: '/tools/wx_20260413125458' },
-          { text: '手慢无：送出 5 个免手续费汇...', link: '/tools/wx_20260419212801' }
+          { text: '手慢无：送出 5 个免手续费汇...',
+          link: '/tools/wx_20260419212801' },
+          { text: '支付宝可直接付款，3分钟搞定 ...', link: '/tools/wx_20260419212858' }
         ]
       }
     ],
