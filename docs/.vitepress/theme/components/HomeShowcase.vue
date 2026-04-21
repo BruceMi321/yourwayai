@@ -71,7 +71,10 @@
     <footer class="custom-footer">
       <div class="footer-columns">
         <div class="footer-brand">
-          <h2>YourwayAI</h2>
+          <div class="footer-brand-header">
+            <img src="/logo.jpg" alt="YourwayAI Logo" class="footer-logo">
+            <h2>YourwayAI</h2>
+          </div>
           <p>Discover and explore the best free and open-source software. Curated by the community, for the community.</p>
         </div>
         <div class="footer-links">
@@ -499,10 +502,24 @@ const allTools = computed(() => {
   max-width: 300px;
 }
 
+.footer-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.footer-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .footer-brand h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   color: var(--vp-c-text-1);
 }
 
