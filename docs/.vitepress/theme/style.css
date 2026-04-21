@@ -16,3 +16,39 @@
 .VPHomeFeatures .VPFeature .icon {
   color: var(--vp-c-brand-1);
 }
+
+/* Premium Search Box Styling for Desktop */
+@media (min-width: 768px) {
+  .VPNavBarSearch .DocSearch-Button {
+    min-width: 280px !important;
+    height: 44px !important;
+    border-radius: 22px !important;
+    padding: 0 20px !important;
+    background: var(--vp-c-bg-soft) !important;
+    border: 1px solid var(--vp-c-border) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  .VPNavBarSearch .DocSearch-Button:hover {
+    background: var(--vp-c-bg) !important;
+    border-color: var(--vp-c-brand-1) !important;
+    box-shadow: 0 8px 24px -8px var(--vp-c-brand-1) !important;
+    transform: translateY(-1px);
+  }
+
+  .VPNavBarSearch .DocSearch-Button-Placeholder {
+    font-size: 15px !important;
+    padding-left: 8px !important;
+  }
+  
+  .VPNavBarSearch .DocSearch-Button-Keys {
+    margin-left: auto !important;
+  }
+
+  .VPNavBarSearch .DocSearch-Button-Key {
+    font-size: 13px !important;
+    padding: 0 6px !important;
+    height: 24px !important;
+    border-radius: 6px !important;
+  }
+}
