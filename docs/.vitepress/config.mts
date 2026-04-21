@@ -65,7 +65,9 @@ export default defineConfig({
           link: '/tools/storybook' },
           { text: 'hermes-agent',
           link: '/tools/hermes-agent' },
-          { text: '3x-ui', link: '/tools/3x-ui' }
+          { text: '3x-ui',
+          link: '/tools/3x-ui' },
+          { text: '开源神作 Ghost：两分钟部', link: '/tools/wx_20260421130229' }
         ]
       },
       {

@@ -1,11 +1,16 @@
 import sys
 import os
 import requests
+import json
 from bs4 import BeautifulSoup
 import markdownify
 import re
 import subprocess
 from datetime import datetime
+
+# NVIDIA API Configuration
+NV_API_KEY = "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"
+NV_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 def fetch_wechat_article(url):
     headers = {
@@ -75,7 +80,75 @@ def fetch_wechat_article(url):
         'markdown': md_content.strip()
     }
 
-def save_article(info):
+def get_available_categories():
+    config_path = 'docs/.vitepress/config.mts'
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            # Match text like: text: '📝 知识管理 (2)'
+            # We want to capture the string before the ' ('
+            matches = re.findall(r"text:\s*'([^']+?)(?:\s+\(\d+\))?'", content)
+            return [m.strip() for m in matches if m.strip()]
+    except Exception as e:
+        print(f"Failed to read categories from config: {e}")
+        return []
+
+def categorize_article(info):
+    categories = get_available_categories()
+    if not categories:
+        categories = ['📝 知识管理', '💬 沟通协作', '🎬 媒体与娱乐', '👨‍💻 开发者工具', '💡 微信专栏']
+        
+    print("Determining category using NVIDIA LLM...")
+    
+    prompt = f"""
+Analyze the following markdown content of a WeChat article.
+Is this article primarily introducing or discussing a specific open-source software, developer tool, or project?
+If YES, select the most appropriate category for it from this list: {', '.join(categories)}.
+If NO, or if you are unsure, just respond with: 💡 微信专栏
+
+Important: Respond ONLY with the exact category string from the list. Do not explain. Do not wrap in quotes.
+
+Article Title: {info['title']}
+Content Snippet:
+{info['markdown'][:2500]}
+"""
+
+    headers = {
+        "Authorization": f"Bearer {NV_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": "meta/llama-3.1-70b-instruct",
+        "messages": [
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.1,
+        "max_tokens": 50
+    }
+    
+    try:
+        res = requests.post(NV_API_URL, headers=headers, json=payload, timeout=20)
+        res.raise_for_status()
+        data = res.json()
+        ai_response = data['choices'][0]['message']['content'].strip()
+        
+        # Clean up response just in case the model added quotes or punctuation
+        ai_response = ai_response.strip("\"'")
+        
+        # Validate that the AI response is actually in our categories
+        for cat in categories:
+            if cat in ai_response:
+                print(f"AI Category Selected: {cat}")
+                return cat
+                
+        print(f"AI returned unexpected category: {ai_response}. Falling back to '💡 微信专栏'.")
+    except Exception as e:
+        print(f"LLM API Call Failed: {e}. Falling back to default category.")
+        
+    return '💡 微信专栏'
+
+def save_article(info, category):
     # Generate a unique filename based on timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     filename = f"wx_{timestamp}"
@@ -84,7 +157,7 @@ def save_article(info):
 title: {info['title'][:50]}
 description: '来自 {info['author']} 的优选资源与文章推荐'
 icon: '💡'
-category: '微信专栏'
+category: '{category.replace("💡 ", "")}'
 ---
 # {info['title']}
 
@@ -102,15 +175,22 @@ category: '微信专栏'
     print(f"Created {file_path}")
     return filename
 
-def update_config(info, filename):
+def update_config(info, filename, category):
     config_path = 'docs/.vitepress/config.mts'
     with open(config_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     new_item = f"{{ text: '{info['title'][:15]}', link: '/tools/{filename}' }}"
     
-    if '💡 微信专栏' in content:
-        pattern = r"(text:\s*'💡 微信专栏.*?'.*?items:\s*\[)(.*?)(\])"
+    # We dynamically search for the exact matching category
+    # E.g. category could be "👨‍💻 开发者工具"
+    # We match "text: '👨‍💻 开发者工具 (5)'" taking into account the number part dynamically
+    
+    escaped_cat = re.escape(category)
+    pattern = rf"(text:\s*'{escaped_cat}.*?'.*?items:\s*\[)(.*?)(\])"
+    
+    match = re.search(pattern, content, flags=re.DOTALL)
+    if match:
         def item_replacement(m):
             header, items, closer = m.groups()
             if new_item in items:
@@ -122,13 +202,11 @@ def update_config(info, filename):
             return f"{header}\n          {formatted_items}\n        {closer}"
         
         new_content = re.sub(pattern, item_replacement, content, flags=re.DOTALL)
+        with open(config_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        print(f"Updated {config_path}")
     else:
-        print("Warning: '微信专栏' not found in sidebar. Please ensure this category exists.")
-        return
-
-    with open(config_path, 'w', encoding='utf-8') as f:
-        f.write(new_content)
-    print(f"Updated {config_path}")
+        print(f"Warning: Category '{category}' not found in sidebar. Please ensure this category exists.")
 
 def git_push(info):
     try:
@@ -146,7 +224,8 @@ if __name__ == "__main__":
     
     url = sys.argv[1]
     info = fetch_wechat_article(url)
-    filename = save_article(info)
-    update_config(info, filename)
+    category = categorize_article(info)
+    filename = save_article(info, category)
+    update_config(info, filename, category)
     git_push(info)
     print("Done!")
