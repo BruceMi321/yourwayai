@@ -21,27 +21,14 @@
         <header class="main-header">
           <div class="header-title">
             <h2>🚀 探索工具库</h2>
-            <span class="tagline">{{ filteredTools.length }} 个重磅资源</span>
+            <span class="tagline">{{ allTools.length }} 个重磅资源</span>
           </div>
         </header>
 
-        <nav class="filter-nav">
-          <div class="tabs-container">
-            <button 
-              v-for="cat in categories" 
-              :key="cat"
-              class="category-tab" 
-              :class="{ active: selectedCategory === cat }"
-              @click="selectedCategory = cat"
-            >
-              <span class="cat-name">{{ cat }}</span>
-              <span class="cat-badge" v-if="getCategoryCount(cat) > 0">{{ getCategoryCount(cat) }}</span>
-            </button>
-          </div>
-        </nav>
+
 
         <div class="tools-grid">
-          <a :href="tool.link" class="tool-card" v-for="tool in tools" :key="tool.id">
+          <a :href="tool.link" class="tool-card" v-for="tool in allTools" :key="tool.id">
             <div class="card-glow" :style="{ background: tool.iconBg }"></div>
             <div class="tool-card-header">
               <div class="tool-icon-wrapper" :style="{ backgroundColor: tool.iconBg }">
@@ -130,12 +117,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 
 // Use Vite's native glob import to read all markdown frontmatter
 const modules = import.meta.glob('/tools/*.md', { eager: true })
-
-const selectedCategory = ref('All')
 
 // Simple color rotation for aesthetic card backgrounds
 const colors = [
@@ -166,22 +151,6 @@ const allTools = computed(() => {
   })
 })
 
-const categories = computed(() => {
-  const cats = new Set(allTools.value.map(t => t.category))
-  return ['All', ...Array.from(cats).sort()]
-})
-
-const filteredTools = computed(() => {
-  if (selectedCategory.value === 'All') return allTools.value
-  return allTools.value.filter(t => t.category === selectedCategory.value)
-})
-
-const tools = filteredTools
-
-const getCategoryCount = (cat) => {
-  if (cat === 'All') return allTools.value.length
-  return allTools.value.filter(t => t.category === cat).length
-}
 </script>
 
 <style scoped>
@@ -326,68 +295,6 @@ const getCategoryCount = (cat) => {
   font-size: 0.9rem;
   color: var(--vp-c-text-2);
   margin-top: 0.5rem;
-}
-
-/* Filter Navigation */
-.filter-nav {
-  margin-bottom: 2.5rem;
-  position: sticky;
-  top: var(--vp-nav-height);
-  z-index: 10;
-  padding: 0.5rem 0;
-  background: var(--vp-c-bg);
-}
-
-.tabs-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  padding: 4px;
-  background: var(--vp-c-bg-alt);
-  border-radius: 12px;
-  border: 1px solid var(--vp-c-border);
-  width: fit-content;
-}
-
-.category-tab {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.category-tab:hover {
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg-soft);
-}
-
-.category-tab.active {
-  background: var(--vp-c-bg);
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-soft);
-  box-shadow: 0 4px 12px rgba(24, 216, 103, 0.1);
-}
-
-.cat-badge {
-  font-size: 0.75rem;
-  padding: 1px 6px;
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-  border-radius: 10px;
-  transition: all 0.3s;
-}
-
-.category-tab.active .cat-badge {
-  background: var(--vp-c-brand-1);
-  color: white;
 }
 
 /* Tool Grid */
