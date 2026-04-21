@@ -61,7 +61,9 @@ export default defineConfig({
           link: '/tools/the-art-of-command-line' },
           { text: 'V8 Engine — JS 运行引擎',
           link: '/tools/v8' },
-          { text: 'storybook', link: '/tools/storybook' }
+          { text: 'storybook',
+          link: '/tools/storybook' },
+          { text: 'hermes-agent', link: '/tools/hermes-agent' }
         ]
       },
       {
