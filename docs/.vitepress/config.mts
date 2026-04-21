@@ -62,7 +62,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '💡 微信专栏 (3)',
+        text: '💡 微信专栏 (4)',
         collapsed: false,
         items: [
           { text: '最强浏览器杀手 Open Chrome',
