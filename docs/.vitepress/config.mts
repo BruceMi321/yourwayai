@@ -65,9 +65,13 @@ export default defineConfig({
         text: '💡 微信专栏 (3)',
         collapsed: false,
         items: [
-          { text: '最强浏览器杀手 Open Chrome', link: '/tools/wx_20260413125458' },
-          { text: '免手续费跨境汇款名额', link: '/tools/wx_20260419212801' },
-          { text: '支付宝搞定 AI 订阅全攻略', link: '/tools/wx_20260419212858' }
+          { text: '最强浏览器杀手 Open Chrome',
+          link: '/tools/wx_20260413125458' },
+          { text: '免手续费跨境汇款名额',
+          link: '/tools/wx_20260419212801' },
+          { text: '支付宝搞定 AI 订阅全攻略',
+          link: '/tools/wx_20260419212858' },
+          { text: '手慢无？不是，这是 AI 时代', link: '/tools/wx_20260421112236' }
         ]
       }
     ],

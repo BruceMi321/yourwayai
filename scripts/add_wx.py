@@ -84,6 +84,31 @@ def save_article(info):
 title: {info['title'][:50]}
 description: '来自 {info['author']} 的优选资源与文章推荐'
 icon: '💡'
+category: '微信专栏'
+---
+# {info['title']}
+
+* **原文链接**: [{info['url']}]({info['url']})
+* **作者**: {info['author']}
+
+---
+
+{info['markdown']}
+"""
+    file_path = f"docs/tools/{filename}.md"
+    os.makedirs("docs/tools", exist_ok=True)
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Created {file_path}")
+    return filename
+
+def update_config(info, filename):
+    config_path = 'docs/.vitepress/config.mts'
+    with open(config_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    new_item = f"{{ text: '{info['title'][:15]}', link: '/tools/{filename}' }}"
+    
     if '💡 微信专栏' in content:
         pattern = r"(text:\s*'💡 微信专栏.*?'.*?items:\s*\[)(.*?)(\])"
         def item_replacement(m):
