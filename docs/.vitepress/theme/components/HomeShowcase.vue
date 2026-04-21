@@ -16,16 +16,8 @@
             <p class="pinned-desc">无需海外信用卡，安全稳定地订阅海外顶级AI大模型，彻底打破支付门槛。</p>
             <a href="/tools/wx_20260419212858" class="pinned-link">立即阅读 →</a>
           </div>
+
         </section>
-
-        <header class="main-header">
-          <div class="header-title">
-            <h2>🚀 探索工具库</h2>
-            <span class="tagline">{{ allTools.length }} 个重磅资源</span>
-          </div>
-        </header>
-
-
 
         <div class="tools-grid">
           <a :href="tool.link" class="tool-card" v-for="tool in allTools" :key="tool.id">
@@ -274,28 +266,6 @@ const allTools = computed(() => {
   transform: translateY(-1px);
 }
 
-
-/* Header Styles */
-.main-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--vp-c-border);
-}
-
-.header-title h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0;
-  background: linear-gradient(120deg, var(--vp-c-text-1) 0%, var(--vp-c-brand-1) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.tagline {
-  font-size: 0.9rem;
-  color: var(--vp-c-text-2);
-  margin-top: 0.5rem;
-}
 
 /* Tool Grid */
 .tools-grid {
