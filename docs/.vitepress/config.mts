@@ -32,43 +32,38 @@ export default defineConfig({
     // 网站左侧的分类侧边栏
     sidebar: [
       {
-        text: '📝 知识管理',
+        text: '📝 知识管理 (2)',
         collapsed: false,
-        badge: { text: '2', type: 'tip' },
         items: [
           { text: 'Outline — 团队 Wiki 知识库', link: '/tools/outline' },
           { text: 'Memos — 碎片化灵感笔记', link: '/tools/memos' }
         ]
       },
       {
-        text: '💬 沟通协作',
+        text: '💬 沟通协作 (1)',
         collapsed: false,
-        badge: { text: '1', type: 'tip' },
         items: [
           { text: 'Chatwoot — 全渠道客服中台', link: '/tools/chatwoot' }
         ]
       },
       {
-        text: '🎬 媒体与娱乐',
+        text: '🎬 媒体与娱乐 (1)',
         collapsed: false,
-        badge: { text: '1', type: 'tip' },
         items: [
           { text: 'Jellyfin — 自建私人影院', link: '/tools/jellyfin' }
         ]
       },
       {
-        text: '👨‍💻 开发者工具',
+        text: '👨‍💻 开发者工具 (2)',
         collapsed: false,
-        badge: { text: '2', type: 'tip' },
         items: [
           { text: '命令行的艺术 — 终端神技', link: '/tools/the-art-of-command-line' },
           { text: 'V8 Engine — JS 运行引擎', link: '/tools/v8' }
         ]
       },
       {
-        text: '💡 星球专栏',
+        text: '💡 星球专栏 (3)',
         collapsed: false,
-        badge: { text: '3', type: 'tip' },
         items: [
           { text: '最强浏览器杀手 Open Chrome', link: '/tools/wx_20260413125458' },
           { text: '免手续费跨境汇款名额', link: '/tools/wx_20260419212801' },
