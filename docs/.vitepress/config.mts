@@ -73,7 +73,9 @@ export default defineConfig({
           link: '/tools/wx_20260413125458' },
           { text: 'cookcli',
           link: '/tools/cookcli' },
-          { text: 'penpot', link: '/tools/penpot' }
+          { text: 'penpot',
+          link: '/tools/penpot' },
+          { text: 'goose', link: '/tools/goose' }
         ]
       },
       {
