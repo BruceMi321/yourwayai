@@ -75,7 +75,9 @@ export default defineConfig({
           link: '/tools/cookcli' },
           { text: 'penpot',
           link: '/tools/penpot' },
-          { text: 'goose', link: '/tools/goose' }
+          { text: 'goose',
+          link: '/tools/goose' },
+          { text: 'FluentFlyout', link: '/tools/fluentflyout' }
         ]
       },
       {
