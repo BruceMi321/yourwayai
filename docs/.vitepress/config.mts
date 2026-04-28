@@ -67,8 +67,11 @@ export default defineConfig({
           link: '/tools/hermes-agent' },
           { text: '3x-ui',
           link: '/tools/3x-ui' },
-          { text: '开源神作 Ghost：两分钟部', link: '/tools/wx_20260421130229' },
-          { text: '最强浏览器杀手 Open Chrome', link: '/tools/wx_20260413125458' }
+          { text: '开源神作 Ghost：两分钟部',
+          link: '/tools/wx_20260421130229' },
+          { text: '最强浏览器杀手 Open Chrome',
+          link: '/tools/wx_20260413125458' },
+          { text: 'cookcli', link: '/tools/cookcli' }
         ]
       },
       {
