@@ -3,3 +3,4 @@ node_modules
 dist
 .vitepress/dist
 .vitepress/cache
+docs/public/ywc_resume_landing_page.html
