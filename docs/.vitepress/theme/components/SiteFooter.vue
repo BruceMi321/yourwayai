@@ -1,23 +1,29 @@
 <template>
   <footer class="site-footer">
     <div class="footer-inner">
-      <!-- Brand -->
-      <div class="footer-brand">
-        <img src="/logo.jpg" alt="YourwayAI Logo" class="footer-logo" />
-        <span class="footer-name">YourwayAI</span>
-      </div>
+      <div class="footer-top">
+        <!-- Left: Brand -->
+        <div class="footer-brand-section">
+          <div class="footer-brand">
+            <img src="/logo.jpg" alt="YourwayAI Logo" class="footer-logo" />
+            <span class="footer-name">YourwayAI</span>
+          </div>
+          <p class="footer-tagline">发现优质的免费开源软件，打破信息差，拥抱开源精神。</p>
+        </div>
 
-      <!-- Tagline -->
-      <p class="footer-tagline">发现优质的免费开源软件，打破信息差，拥抱开源精神。</p>
-
-      <!-- Links -->
-      <div class="footer-links">
-        <a href="/sponsor/ywc-resume" class="footer-link sponsor-link">🏅 赞助我们</a>
-        <span class="footer-link-divider">|</span>
-        <a href="https://github.com" target="_blank" rel="noopener" class="footer-link">GitHub</a>
-        <a href="https://openai.com" target="_blank" rel="noopener" class="footer-link">OpenAI</a>
-        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="footer-link">Gemini</a>
-        <a href="https://claude.ai" target="_blank" rel="noopener" class="footer-link">Claude</a>
+        <!-- Right: Links -->
+        <div class="footer-links-section">
+          <div class="footer-links">
+            <a href="/sponsor/ywc-resume" class="footer-link sponsor-link">🏅 赞助我们</a>
+            <span class="footer-link-divider">|</span>
+            <a href="https://github.com" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+            <a href="https://x.com" target="_blank" rel="noopener" class="footer-link">X</a>
+            <a href="https://threads.net" target="_blank" rel="noopener" class="footer-link">Threads</a>
+            <a href="https://openai.com" target="_blank" rel="noopener" class="footer-link">OpenAI</a>
+            <a href="https://gemini.google.com" target="_blank" rel="noopener" class="footer-link">Gemini</a>
+            <a href="https://claude.ai" target="_blank" rel="noopener" class="footer-link">Claude</a>
+          </div>
+        </div>
       </div>
 
       <!-- Divider -->
@@ -40,20 +46,33 @@
   margin-top: 3rem;
   border-top: 1px solid var(--vp-c-divider);
   background: var(--vp-c-bg-soft);
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 2.5rem 1.5rem 2rem;
 }
 
 .footer-inner {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  text-align: center;
+  gap: 1.5rem;
 }
 
-/* Brand row */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* Brand Section */
+.footer-brand-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 400px;
+}
+
 .footer-brand {
   display: flex;
   align-items: center;
@@ -61,39 +80,41 @@
 }
 
 .footer-logo {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   object-fit: cover;
 }
 
 .footer-name {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
   letter-spacing: -0.01em;
 }
 
-/* Tagline */
 .footer-tagline {
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   color: var(--vp-c-text-2);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* Links */
+/* Links Section */
+.footer-links-section {
+  display: flex;
+  flex-direction: column;
+}
+
 .footer-links {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 0.2rem;
+  gap: 1.2rem;
 }
 
 .footer-link {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--vp-c-text-2);
   text-decoration: none;
   font-weight: 500;
@@ -119,28 +140,28 @@
   width: 100%;
   height: 1px;
   background: var(--vp-c-divider);
-  margin: 0.4rem 0;
+  margin: 0.5rem 0;
 }
 
 /* Bottom row */
 .footer-bottom {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 1.2rem;
 }
 
 .footer-copyright {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: var(--vp-c-text-3);
 }
 
 .footer-contact {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.78rem;
+  gap: 0.4rem;
+  font-size: 0.85rem;
   color: var(--vp-c-brand-1);
   text-decoration: none;
   font-weight: 600;
@@ -152,6 +173,28 @@
 }
 
 .contact-icon {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .footer-brand-section {
+    align-items: center;
+  }
+  
+  .footer-links {
+    justify-content: center;
+  }
+  
+  .footer-bottom {
+    justify-content: center;
+    text-align: center;
+  }
 }
 </style>
