@@ -19,17 +19,7 @@
 
         </section>
 
-        <!-- Mobile-only Sponsor Banner -->
-        <a href="/sponsor/ywc-resume" target="_blank" rel="noopener" class="mobile-sponsor-banner">
-          <span class="mobile-sponsor-icon">📄</span>
-          <div class="mobile-sponsor-text">
-            <strong>YourWayCareer</strong>
-            <span>高端简历精修，提升求职竞争力</span>
-          </div>
-          <span class="mobile-sponsor-arrow">→</span>
-        </a>
-
-        <!-- Mobile-only Sponsor Banner 2: GamsGo -->
+        <!-- Mobile-only Sponsor Banner 1: GamsGo -->
         <a href="https://www.gamsgo.com/partner/WzbXX" target="_blank" rel="noopener" class="mobile-sponsor-banner" style="background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(255, 69, 0, 0.05) 100%); border-color: rgba(138, 43, 226, 0.3);">
           <span class="mobile-sponsor-icon">🍿</span>
           <div class="mobile-sponsor-text">
@@ -37,6 +27,16 @@
             <span>全球领先的流媒体与AI合租平台</span>
           </div>
           <span class="mobile-sponsor-arrow" style="color: #8a2be2;">→</span>
+        </a>
+
+        <!-- Mobile-only Sponsor Banner 2: YourWayCareer -->
+        <a href="/sponsor/ywc-resume" target="_blank" rel="noopener" class="mobile-sponsor-banner">
+          <span class="mobile-sponsor-icon">📄</span>
+          <div class="mobile-sponsor-text">
+            <strong>YourWayCareer</strong>
+            <span>高端简历精修，提升求职竞争力</span>
+          </div>
+          <span class="mobile-sponsor-arrow">→</span>
         </a>
 
         <!-- Control Bar -->
@@ -104,23 +104,9 @@
       <aside class="sidebar right-sidebar">
         <h2 class="sidebar-title sponsor-title">👑 Sponsored</h2>
 
-        <!-- Sponsor #1: YourWayCareer -->
-        <a href="/sponsor/ywc-resume" target="_blank" rel="noopener" class="real-sponsor-card">
-          <div class="real-sponsor-badge">✦ 赞助商 #1</div>
-          <div class="real-sponsor-logo">📄</div>
-          <h3 class="real-sponsor-name">YourWayCareer</h3>
-          <p class="real-sponsor-tagline">高竞争岗位简历精修计划</p>
-          <ul class="real-sponsor-points">
-            <li>🎯 投行 · 咨询 · 外企管培</li>
-            <li>✍️ Bullet Point 逐行改写</li>
-            <li>🌐 英文简历精修</li>
-          </ul>
-          <div class="real-sponsor-cta">查看服务详情 →</div>
-        </a>
-
-        <!-- Sponsor #2: GamsGo -->
+        <!-- Sponsor #1: GamsGo -->
         <a href="https://www.gamsgo.com/partner/WzbXX" target="_blank" rel="noopener" class="real-sponsor-card" style="background: linear-gradient(145deg, rgba(138, 43, 226, 0.08) 0%, rgba(255, 69, 0, 0.04) 100%); border-color: rgba(138, 43, 226, 0.4);">
-          <div class="real-sponsor-badge" style="color: #8a2be2; background: rgba(138, 43, 226, 0.12);">✦ 赞助商 #2</div>
+          <div class="real-sponsor-badge" style="color: #8a2be2; background: rgba(138, 43, 226, 0.12);">✦ 赞助商 #1</div>
           <div class="real-sponsor-logo">🍿</div>
           <h3 class="real-sponsor-name">GamsGo</h3>
           <p class="real-sponsor-tagline" style="color: #8a2be2;">领先的流媒体与AI合租平台</p>
@@ -130,6 +116,20 @@
             <li>⚡ 自动发车，稳定无忧</li>
           </ul>
           <div class="real-sponsor-cta" style="color: #8a2be2;">立即上车体验 →</div>
+        </a>
+
+        <!-- Sponsor #2: YourWayCareer -->
+        <a href="/sponsor/ywc-resume" target="_blank" rel="noopener" class="real-sponsor-card">
+          <div class="real-sponsor-badge">✦ 赞助商 #2</div>
+          <div class="real-sponsor-logo">📄</div>
+          <h3 class="real-sponsor-name">YourWayCareer</h3>
+          <p class="real-sponsor-tagline">高竞争岗位简历精修计划</p>
+          <ul class="real-sponsor-points">
+            <li>🎯 投行 · 咨询 · 外企管培</li>
+            <li>✍️ Bullet Point 逐行改写</li>
+            <li>🌐 英文简历精修</li>
+          </ul>
+          <div class="real-sponsor-cta">查看服务详情 →</div>
         </a>
 
       </aside>
