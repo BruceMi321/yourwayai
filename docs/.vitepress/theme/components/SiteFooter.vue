@@ -1,5 +1,13 @@
+<script setup>
+import { useData } from 'vitepress'
+import { computed } from 'vue'
+
+const { frontmatter } = useData()
+const isHome = computed(() => frontmatter.value.layout === 'home')
+</script>
+
 <template>
-  <footer class="site-footer">
+  <footer class="site-footer" :class="{ 'has-sidebar': !isHome }">
     <div class="footer-inner">
       <div class="footer-top">
         <!-- Left: SEO Optimized Brand Section -->
@@ -56,6 +64,13 @@
   padding: 3rem 1.5rem 2.5rem;
   width: 100%;
   box-sizing: border-box;
+  transition: padding-left 0.25s ease;
+}
+
+@media (min-width: 960px) {
+  .site-footer.has-sidebar {
+    padding-left: calc(var(--vp-sidebar-width, 279px) + 1.5rem);
+  }
 }
 
 .footer-inner {
