@@ -10,6 +10,16 @@
       <!-- Tagline -->
       <p class="footer-tagline">发现优质的免费开源软件，打破信息差，拥抱开源精神。</p>
 
+      <!-- Links -->
+      <div class="footer-links">
+        <a href="/sponsor/ywc-resume" class="footer-link sponsor-link">🏅 赞助我们</a>
+        <span class="footer-link-divider">|</span>
+        <a href="https://github.com" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+        <a href="https://openai.com" target="_blank" rel="noopener" class="footer-link">OpenAI</a>
+        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="footer-link">Gemini</a>
+        <a href="https://claude.ai" target="_blank" rel="noopener" class="footer-link">Claude</a>
+      </div>
+
       <!-- Divider -->
       <div class="footer-divider"></div>
 
@@ -70,6 +80,38 @@
   color: var(--vp-c-text-2);
   margin: 0;
   line-height: 1.5;
+}
+
+/* Links */
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.2rem;
+}
+
+.footer-link {
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.sponsor-link {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+.footer-link-divider {
+  color: var(--vp-c-divider);
+  font-size: 0.8rem;
 }
 
 /* Divider */
