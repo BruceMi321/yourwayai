@@ -1,15 +1,20 @@
-/* Override default VitePress CSS variables with YourwayAI Brand Green */
+/* Override default VitePress CSS variables with Apple System Green and Fonts */
 :root {
-  --vp-c-brand-1: #18d867; /* Primary Brand Color - Bright Neon Green */
-  --vp-c-brand-2: #09b851; /* Darker variant for hovers */
-  --vp-c-brand-3: #00933c; /* Darkest variant for active states */
-  --vp-c-brand-soft: rgba(24, 216, 103, 0.16); /* Background for soft elements */
+  /* Fonts */
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --vp-font-family-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Brand Colors - Apple System Green */
+  --vp-c-brand-1: #34c759; 
+  --vp-c-brand-2: #30d158; 
+  --vp-c-brand-3: #28cd41; 
+  --vp-c-brand-soft: rgba(52, 199, 89, 0.12); 
 }
 
-/* Optional: Slight tweaks to make the typography feel more premium */
+/* Premium Typography: Apple-like headings */
 .vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 /* Style the Home page feature icons dynamically with our color */

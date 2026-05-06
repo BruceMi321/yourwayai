@@ -159,11 +159,11 @@ const modules = import.meta.glob('/tools/*.md', { eager: true })
 
 // Simple color rotation for aesthetic card backgrounds
 const colors = [
-  'rgba(24, 216, 103, 0.1)',
-  'rgba(255, 69, 0, 0.1)',
-  'rgba(0, 191, 255, 0.1)',
-  'rgba(138, 43, 226, 0.1)',
-  'rgba(255, 215, 0, 0.1)'
+  'rgba(52, 199, 89, 0.12)',
+  'rgba(0, 122, 255, 0.12)',
+  'rgba(255, 149, 0, 0.12)',
+  'rgba(175, 82, 222, 0.12)',
+  'rgba(255, 45, 85, 0.12)'
 ]
 
 const searchQuery = ref('')
@@ -372,13 +372,15 @@ const getRelativeTime = (dateString) => {
 
 /* Pinned Section */
 .pinned-section {
-  background: linear-gradient(135deg, rgba(24, 216, 103, 0.1) 0%, rgba(24, 216, 103, 0.02) 100%);
-  border: 1px solid var(--vp-c-brand-1);
-  border-radius: 12px;
+  background: rgba(150, 150, 150, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 20px;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px -5px rgba(24, 216, 103, 0.15);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
 }
 
 .pinned-badge {
@@ -470,13 +472,13 @@ const getRelativeTime = (dateString) => {
 .search-input {
   width: 100%;
   padding: 0.8rem 1rem 0.8rem 3rem;
-  border-radius: 12px;
+  border-radius: 999px;
   border: 1px solid var(--vp-c-border);
   background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 
 .search-input:focus {
@@ -583,57 +585,27 @@ const getRelativeTime = (dateString) => {
 .tool-card {
   position: relative;
   background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 16px;
+  border: 1px solid rgba(150, 150, 150, 0.15);
+  border-radius: 20px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   text-decoration: none !important;
   color: inherit !important;
   overflow: hidden;
-  --spotlight-x: 50%;
-  --spotlight-y: 50%;
-  --spotlight-opacity: 0;
-}
-
-.tool-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  opacity: var(--spotlight-opacity);
-  background: radial-gradient(
-    400px circle at var(--spotlight-x) var(--spotlight-y),
-    rgba(255, 255, 255, 0.06),
-    transparent 60%
-  );
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.card-glow {
-  position: absolute;
-  top: -20%;
-  left: -20%;
-  width: 140%;
-  height: 140%;
-  opacity: 0;
-  filter: blur(40px);
-  z-index: 0;
-  transition: opacity 0.4s;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
 }
 
 .tool-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.015) translateY(-2px);
+  border-color: rgba(150, 150, 150, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
 }
 
-.tool-card:hover .card-glow {
-  opacity: 0.05;
+.card-glow {
+  display: none;
 }
 
 .tool-card-header {
