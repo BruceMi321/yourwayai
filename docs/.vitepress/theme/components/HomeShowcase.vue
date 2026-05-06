@@ -29,6 +29,16 @@
           <span class="mobile-sponsor-arrow">→</span>
         </a>
 
+        <!-- Mobile-only Sponsor Banner 2: GamsGo -->
+        <a href="https://www.gamsgo.com/partner/WzbXX" target="_blank" rel="noopener" class="mobile-sponsor-banner" style="background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(255, 69, 0, 0.05) 100%); border-color: rgba(138, 43, 226, 0.3);">
+          <span class="mobile-sponsor-icon">🍿</span>
+          <div class="mobile-sponsor-text">
+            <strong style="color: #8a2be2;">GamsGo</strong>
+            <span>全球领先的流媒体与AI合租平台</span>
+          </div>
+          <span class="mobile-sponsor-arrow" style="color: #8a2be2;">→</span>
+        </a>
+
         <!-- Control Bar -->
         <div class="control-bar">
           <div class="search-wrapper">
@@ -106,6 +116,20 @@
             <li>🌐 英文简历精修</li>
           </ul>
           <div class="real-sponsor-cta">查看服务详情 →</div>
+        </a>
+
+        <!-- Sponsor #2: GamsGo -->
+        <a href="https://www.gamsgo.com/partner/WzbXX" target="_blank" rel="noopener" class="real-sponsor-card" style="background: linear-gradient(145deg, rgba(138, 43, 226, 0.08) 0%, rgba(255, 69, 0, 0.04) 100%); border-color: rgba(138, 43, 226, 0.4);">
+          <div class="real-sponsor-badge" style="color: #8a2be2; background: rgba(138, 43, 226, 0.12);">✦ 赞助商 #2</div>
+          <div class="real-sponsor-logo">🍿</div>
+          <h3 class="real-sponsor-name">GamsGo</h3>
+          <p class="real-sponsor-tagline" style="color: #8a2be2;">领先的流媒体与AI合租平台</p>
+          <ul class="real-sponsor-points">
+            <li>🤖 ChatGPT Plus / Claude Pro</li>
+            <li>🎬 Netflix / Spotify / Disney+</li>
+            <li>⚡ 自动发车，稳定无忧</li>
+          </ul>
+          <div class="real-sponsor-cta" style="color: #8a2be2;">立即上车体验 →</div>
         </a>
 
       </aside>
